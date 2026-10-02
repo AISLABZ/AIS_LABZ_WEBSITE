@@ -1,0 +1,142 @@
+name: Articles Engine
+
+# Hourly Monday–Wednesday UTC. The engine itself decides whether the configured
+# local day/hour (ARTICLE_PUBLISH_DAY / ARTICLE_PUBLISH_HOUR / ARTICLE_ENGINE_TIMEZONE)
+# has been reached and runs at most once per ISO week.
+on:
+  schedule:
+    - cron: '7 * * * 1-3'
+  workflow_dispatch:
+    inputs:
+      command:
+        description: Engine command
+        type: choice
+        default: run
+        options: [run, scheduled-run, approve, reject, publish, verify, unpublish, regenerate, retry, pause, resume, build, gsc, status]
+      arg:
+        description: Article id / run id / topic id (for run, the optional topic id)
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: articles-engine
+  cancel-in-progress: false
+
+env:
+  ARTICLE_ENGINE_ENABLED: ${{ vars.ARTICLE_ENGINE_ENABLED }}
+  ARTICLE_AUTO_PUBLISH: ${{ vars.ARTICLE_AUTO_PUBLISH }}
+  ARTICLE_ENGINE_TIMEZONE: ${{ vars.ARTICLE_ENGINE_TIMEZONE }}
+  ARTICLE_PUBLISH_DAY: ${{ vars.ARTICLE_PUBLISH_DAY }}
+  ARTICLE_PUBLISH_HOUR: ${{ vars.ARTICLE_PUBLISH_HOUR }}
+  REQUIRE_FEATURED_IMAGE: ${{ vars.REQUIRE_FEATURED_IMAGE }}
+  AUTO_UPDATE_INTERNAL_LINKS: ${{ vars.AUTO_UPDATE_INTERNAL_LINKS }}
+  POST_PUBLISH_VERIFY_TIMEOUT_SECONDS: ${{ vars.POST_PUBLISH_VERIFY_TIMEOUT_SECONDS }}
+  SITE_URL: ${{ vars.SITE_URL }}
+  LLM_PROVIDER: ${{ vars.LLM_PROVIDER }}
+  LLM_MODEL: ${{ vars.LLM_MODEL }}
+  LLM_MAX_OUTPUT_TOKENS: ${{ vars.LLM_MAX_OUTPUT_TOKENS }}
+  LLM_MAX_CALLS_PER_RUN: ${{ vars.LLM_MAX_CALLS_PER_RUN }}
+  LLM_MONTHLY_TOKEN_BUDGET: ${{ vars.LLM_MONTHLY_TOKEN_BUDGET }}
+  RESEARCH_PROVIDER: ${{ vars.RESEARCH_PROVIDER }}
+  RESEARCH_MAX_REQUESTS: ${{ vars.RESEARCH_MAX_REQUESTS }}
+  RESEARCH_MAX_SOURCES: ${{ vars.RESEARCH_MAX_SOURCES }}
+  IMAGE_PROVIDER: ${{ vars.IMAGE_PROVIDER }}
+  IMAGE_MODEL: ${{ vars.IMAGE_MODEL }}
+  GOOGLE_SEARCH_CONSOLE_PROPERTY: ${{ vars.GOOGLE_SEARCH_CONSOLE_PROPERTY }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  RESEARCH_API_KEY: ${{ secrets.RESEARCH_API_KEY }}
+  GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+  NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run engine command
+        id: engine
+        env:
+          CMD: ${{ github.event_name == 'schedule' && 'scheduled-run' || inputs.command }}
+          ARG: ${{ inputs.arg }}
+        run: |
+          set -o pipefail
+          case "$CMD" in
+            run) if [ -n "$ARG" ]; then node bin/engine.js run --topic "$ARG"; else node bin/engine.js run; fi ;;
+            scheduled-run|verify|pause|resume|build|gsc|status) node bin/engine.js "$CMD" $ARG ;;
+            *) node bin/engine.js "$CMD" "$ARG" ;;
+          esac | tee engine-output.json
+          echo "cmd=$CMD" >> "$GITHUB_OUTPUT"
+
+      - name: Persist editorial database
+        if: always()
+        run: |
+          git config user.name "aislabz-articles-engine"
+          git config user.email "articles-engine@users.noreply.github.com"
+          git add data
+          if ! git diff --cached --quiet; then
+            git commit -m "articles-engine: ${{ steps.engine.outputs.cmd || 'run' }} [skip ci]"
+            git push
+          fi
+
+      - name: Decide whether to deploy
+        id: deploy
+        env:
+          HAS_FTP: ${{ secrets.HOSTINGER_FTP_HOST != '' }}
+        run: |
+          node bin/engine.js build > /dev/null
+          PENDING=$(node bin/engine.js status | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);console.log(j.articles.filter(a=>a.status==="scheduled").length)})')
+          echo "pending=$PENDING" >> "$GITHUB_OUTPUT"
+          if [ "$PENDING" != "0" ] || [ "${{ steps.engine.outputs.cmd }}" = "unpublish" ] || [ "${{ steps.engine.outputs.cmd }}" = "build" ]; then
+            if [ "$HAS_FTP" = "true" ]; then echo "deploy=true" >> "$GITHUB_OUTPUT"; else echo "::warning::Deployment needed but HOSTINGER_FTP_HOST is not configured"; fi
+          fi
+
+      - name: Deploy /articles/ to Hostinger (FTPS)
+        if: steps.deploy.outputs.deploy == 'true'
+        env:
+          FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
+          FTP_USER: ${{ secrets.HOSTINGER_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          REMOTE_DIR: ${{ vars.HOSTINGER_REMOTE_DIR || 'public_html' }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" <<EOF
+          set ftp:ssl-force true
+          set ssl:verify-certificate true
+          mkdir -p $REMOTE_DIR/articles
+          mkdir -p $REMOTE_DIR/assets/articles
+          mirror -R --delete --verbose dist/articles $REMOTE_DIR/articles
+          mirror -R --delete --verbose dist/assets/articles $REMOTE_DIR/assets/articles
+          put dist/sitemap-articles.xml -o $REMOTE_DIR/sitemap-articles.xml
+          bye
+          EOF
+
+      - name: Verify live publication
+        if: steps.deploy.outputs.deploy == 'true' && steps.deploy.outputs.pending != '0'
+        run: node bin/engine.js verify
+
+      - name: Persist verification results
+        if: always() && steps.deploy.outputs.deploy == 'true'
+        run: |
+          git add data
+          if ! git diff --cached --quiet; then
+            git commit -m "articles-engine: live verification [skip ci]"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Upload draft previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: article-previews
+          path: preview/
+          if-no-files-found: ignore
+          retention-days: 30

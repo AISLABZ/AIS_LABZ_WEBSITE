@@ -1,0 +1,27 @@
+{
+  "_comment": "Site-level configuration for the Articles section. Align brand, navigation, footer and services with the live www.aislabz.com site. Only list services that the live site actually offers: the engine will never claim capabilities that are not listed here.",
+  "siteUrl": "https://www.aislabz.com",
+  "brandName": "AISLabz",
+  "organizationName": "AISLabz",
+  "logoUrl": "",
+  "defaultOgImage": "",
+  "locale": "en",
+  "contactUrl": "/contact",
+  "contactLabel": "Talk to AISLabz",
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "Articles", "href": "/articles/" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "footerLinks": [
+    { "label": "Home", "href": "/" },
+    { "label": "Articles", "href": "/articles/" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "sameAs": [],
+  "services": [],
+  "pillarPages": [],
+  "articlesPerPage": 12,
+  "articlesIndexTitle": "Articles",
+  "articlesIndexDescription": "Practical, evidence-based articles on applied AI: consulting, automation, AI agents, AI search visibility, generative AI and AI strategy."
+}

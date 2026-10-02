@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+preview/
+data/locks/
+*.tmp
+.DS_Store
