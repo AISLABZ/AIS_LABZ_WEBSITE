@@ -2,21 +2,22 @@
   {
     "id": "top_001",
     "topic": "AI Consulting Explained: How Businesses Can Move From AI Experiments to Measurable Results",
-    "primaryQuery": "ai consulting",
+    "primaryQuery": "what is ai consulting",
     "secondaryQueries": [
-      "what is ai consulting",
-      "ai consulting services",
+      "ai consulting explained",
       "ai pilot to production",
-      "measuring ai roi"
+      "measuring ai roi",
+      "what does an ai consultant do"
     ],
     "searchIntent": "informational",
     "priority": 1,
-    "relatedService": "ai-consulting",
-    "notes": "Pillar for consulting/strategy cluster. Focus on moving from pilots to measured outcomes; distinct from topic 10 (strategy framework) and topic 6 (readiness).",
+    "relatedService": "/services/ai-consulting/",
+    "notes": "Cluster AI-1 pillar (informational). /services/ai-consulting/ owns the commercial query \"ai consulting services\": never target it here, link to it instead. Distinct from top_010 (strategy framework) and top_006 (readiness).",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-1"
   },
   {
     "id": "top_002",
@@ -29,12 +30,13 @@
     ],
     "searchIntent": "informational",
     "priority": 2,
-    "relatedService": "ai-automation",
-    "notes": "Pillar for automation cluster; angle is oversight and control. Topic 8 is the narrower \"what to automate\" selection framework — link, do not duplicate.",
+    "relatedService": "/services/applied-ai-automation/",
+    "notes": "Cluster AI-2 pillar; angle is oversight and control. top_008 is the narrower \"what to automate\" framework — link, do not duplicate. /blog/how-ai-helps-small-businesses-save-time/ owns small-business time/cost savings: do not target \"small business\" queries, link to it.",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-2"
   },
   {
     "id": "top_003",
@@ -47,13 +49,14 @@
       "ai agent use cases"
     ],
     "searchIntent": "informational",
-    "priority": 3,
-    "relatedService": "ai-agents",
+    "priority": 4,
+    "relatedService": "/services/applied-ai-automation/",
     "notes": "Definition-led; must clearly distinguish agents from rule-based automation (supports topics 2 and 8).",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-2"
   },
   {
     "id": "top_004",
@@ -66,48 +69,52 @@
     ],
     "searchIntent": "informational",
     "priority": 4,
-    "relatedService": "ai-search-optimization",
-    "notes": "Brand/entity visibility angle. Topic 5 is the conceptual SEO/AEO/GEO comparison; topic 9 is the website build checklist.",
-    "status": "queued",
+    "relatedService": "/services/organic-growth-seo/",
+    "notes": "Retired before drafting: /blog/answer-engine-optimization-guide/ already serves \"get your brand cited by AI assistants\". Refresh that post instead (docs/keyword-clusters.md, refresh queue). AI Overviews and llms.txt angles moved to top_013 and top_014.",
+    "status": "covered_by_existing",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-3"
   },
   {
     "id": "top_005",
     "topic": "SEO vs AEO vs GEO: How Search Visibility Is Changing in the Age of AI",
     "primaryQuery": "seo vs aeo vs geo",
     "secondaryQueries": [
-      "what is answer engine optimization",
       "what is generative engine optimization",
-      "aeo vs seo"
+      "geo vs seo",
+      "aeo vs seo",
+      "llm seo"
     ],
     "searchIntent": "informational",
-    "priority": 5,
-    "relatedService": "ai-search-optimization",
-    "notes": "Comparison/definitions article. Must avoid overlapping with topic 4 tactics.",
+    "priority": 3,
+    "relatedService": "/services/organic-growth-seo/",
+    "notes": "Cluster AI-3 pillar: definitions and comparison. /blog/answer-engine-optimization-guide/ owns \"what is answer engine optimization\" and AEO tactics — summarise in one paragraph and link to it.",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-3"
   },
   {
     "id": "top_006",
     "topic": "AI Readiness Assessment: Is Your Business Actually Ready to Implement AI?",
-    "primaryQuery": "ai readiness assessment",
+    "primaryQuery": "ai readiness checklist",
     "secondaryQueries": [
       "is my business ready for ai",
-      "ai readiness checklist",
+      "ai readiness assessment questions",
       "data readiness for ai"
     ],
     "searchIntent": "informational",
-    "priority": 6,
-    "relatedService": "ai-consulting",
-    "notes": "Assessment/checklist intent.",
+    "priority": 10,
+    "relatedService": "/services/ai-consulting/",
+    "notes": "Checklist intent. /services/ai-consulting/ offers the readiness assessment itself, so this article owns the self-serve checklist and links to the service for the assessment.",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-1"
   },
   {
     "id": "top_007",
@@ -118,13 +125,14 @@
       "enterprise generative ai applications"
     ],
     "searchIntent": "informational",
-    "priority": 7,
-    "relatedService": "generative-ai",
-    "notes": "Use-case catalogue; every use case must be evidence-backed or explicitly hypothetical.",
+    "priority": 5,
+    "relatedService": "/services/applied-ai-automation/",
+    "notes": "Cluster AI-4 pillar. Use-case catalogue; every use case must be evidence-backed or explicitly hypothetical.",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-4"
   },
   {
     "id": "top_008",
@@ -137,12 +145,13 @@
     ],
     "searchIntent": "informational",
     "priority": 8,
-    "relatedService": "ai-automation",
+    "relatedService": "/services/applied-ai-automation/",
     "notes": "Supporting article to topic 2: decision framework only. Strategist must check cannibalization against topic 2 once published.",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-2"
   },
   {
     "id": "top_009",
@@ -154,13 +163,14 @@
       "technical seo for ai crawlers"
     ],
     "searchIntent": "informational",
-    "priority": 9,
-    "relatedService": "ai-search-optimization",
-    "notes": "Technical implementation angle; link to topics 4 and 5.",
+    "priority": 7,
+    "relatedService": "/services/organic-growth-seo/",
+    "notes": "Technical implementation angle; link to top_005 and to /blog/technical-seo-explained/ (which owns general technical SEO). Keep to what is specific to AI crawlers and generative search.",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-3"
   },
   {
     "id": "top_010",
@@ -172,12 +182,241 @@
       "ai roadmap"
     ],
     "searchIntent": "informational",
-    "priority": 10,
-    "relatedService": "ai-consulting",
+    "priority": 6,
+    "relatedService": "/services/ai-consulting/",
     "notes": "Framework/process article. Distinct from topic 1 (what consulting is / pilots to results).",
     "status": "queued",
     "publishedArticleId": null,
     "createdAt": "2026-10-02T11:50:37.464Z",
-    "updatedAt": "2026-10-02T11:50:37.464Z"
+    "updatedAt": "2026-10-04T06:34:53.707Z",
+    "clusterId": "AI-1"
+  },
+  {
+    "id": "top_011",
+    "clusterId": "AI-3",
+    "priority": 9,
+    "status": "queued",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "Google AI Overviews: How Websites Get Cited and What You Can Influence",
+    "primaryQuery": "how to appear in google ai overviews",
+    "secondaryQueries": [
+      "ai overviews seo",
+      "google ai overviews citations",
+      "ai overviews traffic impact"
+    ],
+    "notes": "Google-specific; the assistant-citation angle belongs to /blog/answer-engine-optimization-guide/. Only claims backed by Google documentation or measured studies.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_012",
+    "clusterId": "AI-1",
+    "priority": 11,
+    "status": "queued",
+    "searchIntent": "commercial",
+    "relatedService": "/services/ai-consulting/",
+    "topic": "How to Choose an AI Consultant: Questions to Ask Before You Hire",
+    "primaryQuery": "how to choose an ai consultant",
+    "secondaryQueries": [
+      "hiring an ai consultant",
+      "ai consultant vs in-house team",
+      "questions to ask an ai consultant"
+    ],
+    "notes": "Commercial investigation; mirrors the format of /blog/how-a-link-building-agency-improves-rankings/. No pricing figures unless confirmed in docs/keyword-clusters.md.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_013",
+    "clusterId": "AI-2",
+    "priority": 12,
+    "status": "queued",
+    "searchIntent": "informational",
+    "relatedService": "/services/applied-ai-automation/",
+    "topic": "AI Lead Scoring: How It Works and When It Beats Rules-Based Scoring",
+    "primaryQuery": "ai lead scoring",
+    "secondaryQueries": [
+      "predictive lead scoring",
+      "machine learning lead scoring",
+      "lead scoring model"
+    ],
+    "notes": "Lead scoring models are a listed capability of /services/applied-ai-automation/.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_014",
+    "clusterId": "AI-3",
+    "priority": 13,
+    "status": "queued",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "What Is llms.txt and Does Your Website Need One?",
+    "primaryQuery": "llms.txt",
+    "secondaryQueries": [
+      "what is llms.txt",
+      "llms.txt vs robots.txt",
+      "how to create llms.txt"
+    ],
+    "notes": "Supporting article to top_009. State plainly which AI providers document support and which do not; no speculation presented as fact.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_015",
+    "clusterId": "AI-4",
+    "priority": 14,
+    "status": "queued",
+    "searchIntent": "informational",
+    "relatedService": "/services/applied-ai-automation/",
+    "topic": "Generative AI for Marketing Teams: Workflows That Save Time Without Diluting Quality",
+    "primaryQuery": "generative ai for marketing",
+    "secondaryQueries": [
+      "generative ai marketing use cases",
+      "ai content workflow",
+      "ai for marketing teams"
+    ],
+    "notes": "Marketing-team slice of top_007; link up to it. Do not repeat the general use-case catalogue.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_016",
+    "clusterId": "AI-4",
+    "priority": 15,
+    "status": "queued",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "Does Google Penalise AI-Generated Content? What the Guidelines Actually Say",
+    "primaryQuery": "does google penalize ai content",
+    "secondaryQueries": [
+      "ai generated content seo",
+      "google helpful content ai",
+      "is ai content bad for seo"
+    ],
+    "notes": "Bridges AI-4 and the SEO clusters. Cite Google Search Central guidance directly.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_017",
+    "clusterId": "AI-5",
+    "priority": 16,
+    "status": "queued",
+    "searchIntent": "informational",
+    "relatedService": "/services/data-analytics/",
+    "topic": "AI in Marketing Attribution: What It Can and Cannot Tell You",
+    "primaryQuery": "ai marketing attribution",
+    "secondaryQueries": [
+      "ai attribution model",
+      "data driven attribution",
+      "marketing mix modelling vs attribution"
+    ],
+    "notes": "Cluster AI-5 pillar. Attribution modelling is a listed capability of /services/data-analytics/.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_018",
+    "clusterId": "S-1",
+    "priority": 30,
+    "status": "suggested",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "How to Improve Core Web Vitals: Fixing LCP, INP and CLS",
+    "primaryQuery": "how to improve core web vitals",
+    "secondaryQueries": [
+      "improve lcp",
+      "reduce cls",
+      "what is inp"
+    ],
+    "notes": "Deep dive below /blog/technical-seo-explained/ (pillar), which only introduces Core Web Vitals.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_019",
+    "clusterId": "S-2",
+    "priority": 31,
+    "status": "suggested",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "Digital PR for SEO: How to Earn Links Journalists Actually Use",
+    "primaryQuery": "digital pr for seo",
+    "secondaryQueries": [
+      "digital pr link building",
+      "digital pr strategy",
+      "digital pr examples"
+    ],
+    "notes": "Digital PR & authority is a listed capability. /blog/quality-link-building-strategies/ only mentions digital PR in passing.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_020",
+    "clusterId": "S-3",
+    "priority": 32,
+    "status": "suggested",
+    "searchIntent": "commercial",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "How Much Does SEO Cost? Retainers, Projects and What Drives the Price",
+    "primaryQuery": "how much does seo cost",
+    "secondaryQueries": [
+      "seo pricing",
+      "seo retainer cost",
+      "seo audit cost"
+    ],
+    "notes": "BUSINESS FACT GATE: needs AiS LABZ pricing approach confirmed in docs/keyword-clusters.md before it is queued.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_021",
+    "clusterId": "S-4",
+    "priority": 33,
+    "status": "suggested",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "Google Business Profile Optimisation: A Step-by-Step Checklist",
+    "primaryQuery": "google business profile optimization",
+    "secondaryQueries": [
+      "optimize google business profile",
+      "google business profile ranking factors",
+      "gbp checklist"
+    ],
+    "notes": "Expands strategy 1 of /blog/local-seo-strategies-to-reach-more-customers/ (pillar). Link to the local SEO case studies under /work/.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
+  },
+  {
+    "id": "top_022",
+    "clusterId": "S-5",
+    "priority": 34,
+    "status": "suggested",
+    "searchIntent": "informational",
+    "relatedService": "/services/organic-growth-seo/",
+    "topic": "Arabic SEO: Keyword Research, Content and hreflang for Bilingual Sites",
+    "primaryQuery": "arabic seo",
+    "secondaryQueries": [
+      "arabic keyword research",
+      "hreflang arabic english",
+      "seo in saudi arabia"
+    ],
+    "notes": "Deep dive below /blog/seo-for-startups-saudi-arabia-uae/ (pillar); that post owns the startup/market overview.",
+    "publishedArticleId": null,
+    "createdAt": "2026-10-04T06:34:53.707Z",
+    "updatedAt": "2026-10-04T06:34:53.707Z"
   }
 ]

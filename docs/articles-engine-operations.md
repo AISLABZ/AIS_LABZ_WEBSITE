@@ -53,9 +53,17 @@ Options:
 
 Search Console data lags about 2–3 days and is noisy for new pages. Judge trends over 4+ weeks. Indexing is never guaranteed, and the engine never reports "indexed" by itself.
 
+## Monthly keyword-cluster review
+
+Run this once a month, after the Search Console data is in. The steps, rules (R1–R8) and guardrails live in [keyword-clusters.md](keyword-clusters.md#monthly-keyword-cluster-review). In short: re-cluster the queries, find the ranking URL for each cluster, apply the first rule that fits, write the actions into the refresh queue or the topic queue, fill in last month's before → after results, and commit the doc.
+
+* Every topic has a `clusterId` that matches `config/site.json` → `topicClusters`. Articles inherit it. It drives the `/articles/` topic hub, related articles and the strategist's cluster context.
+* `/blog/` posts that already own an intent are listed in each cluster's `relatedReading`. The strategist is told not to target their queries.
+
 ## Adding topics
 
-* Admin → *Add topic*, or `node bin/engine.js add-topic '{"topic":"…","primaryQuery":"…","secondaryQueries":["…"],"priority":11}'`.
+* Admin → *Add topic*, or `node bin/engine.js add-topic '{"topic":"…","primaryQuery":"…","secondaryQueries":["…"],"priority":20,"clusterId":"AI-2"}'`. Always set a `clusterId` from [keyword-clusters.md](keyword-clusters.md).
+* `suggested` topics are never picked automatically. Set them to `queued` to schedule them.
 * Lower numbers run first. Edit priority or status from the dashboard or with `edit-topic`.
 * Duplicate primary queries are refused. Keep each topic's intent distinct, and use `notes` to record how it differs from neighbouring topics.
 

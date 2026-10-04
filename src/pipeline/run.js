@@ -176,7 +176,7 @@ export async function runPipeline(cfg, store, { trigger = 'manual', topicId, run
 
     store.updateTopic(topic.id, { status: 'in_progress' });
     article = store.saveArticle({
-      id: newId('art'), topicId: topic.id, title: topic.topic, slug: '', status: 'researching', qaStatus: 'pending',
+      id: newId('art'), topicId: topic.id, clusterId: topic.clusterId || null, title: topic.topic, slug: '', status: 'researching', qaStatus: 'pending',
       generationMetadata: { runId, primaryQuery: topic.primaryQuery, provider: cfg.llm.provider || 'injected', model: cfg.llm.model || 'injected', startedAt: now.toISOString() },
       publishedAt: null, updatedAt: null,
     });

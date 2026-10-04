@@ -1,10 +1,15 @@
 {
-  "version": 1,
+  "version": 2,
   "applied": [
     {
       "version": 1,
       "file": "001_initial_schema_and_topics.js",
       "at": "2026-10-02T11:50:37.467Z"
+    },
+    {
+      "version": 2,
+      "file": "002_keyword_clusters.js",
+      "at": "2026-10-04T06:34:53.708Z"
     }
   ]
 }

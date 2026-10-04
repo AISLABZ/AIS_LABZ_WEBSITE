@@ -122,3 +122,32 @@ test('build: routing, pagination, sitemap inclusion and safe stale-directory rem
     assert.ok(!fs.existsSync(path.join(out, 'articles', 'page', '2')));
   } finally { cleanup(); }
 });
+
+test('index page 1 renders the topic hub: cluster articles, existing blog pages, owning service; empty clusters skipped', () => {
+  const hubSite = {
+    ...site,
+    services: [{ name: 'AI Consulting', url: '/services/ai-consulting/' }],
+    topicClusters: [
+      { id: 'AI-1', name: 'AI consulting & strategy', description: 'd', serviceUrl: '/services/ai-consulting/', relatedReading: [] },
+      { id: 'S-1', name: 'Technical SEO', relatedReading: [{ url: '/blog/technical-seo-explained/', title: 'Technical SEO Explained' }, { url: 'javascript:alert(1)', title: 'bad' }] },
+      { id: 'AI-5', name: 'Empty cluster', relatedReading: [] },
+    ],
+  };
+  const a = article({ clusterId: 'AI-1' });
+  const html = renderIndexPage([a], { site: hubSite, page: 1, totalPages: 2, allArticles: [a] });
+  assert.ok(html.includes('id="topic-ai-1"') && html.includes('href="#topic-ai-1"'));
+  assert.ok(html.includes('<li><a href="/articles/ai-consulting-explained/">'));
+  assert.ok(html.includes('href="/blog/technical-seo-explained/"'));
+  assert.ok(html.includes('Related service: <a href="/services/ai-consulting/">AI Consulting</a>'));
+  assert.ok(!html.includes('Empty cluster'), 'clusters with nothing to link are skipped');
+  assert.ok(!html.includes('javascript:'), 'unsafe related-reading URLs are dropped');
+  assert.ok(!renderIndexPage([a], { site: hubSite, page: 2, totalPages: 2, allArticles: [a] }).includes('ae-clusters'), 'hub only on page 1');
+});
+
+test('related articles prefer the same keyword cluster', async () => {
+  const { relatedArticles } = await import('../src/render/build.js');
+  const base = article({ id: 'art_base', clusterId: 'AI-2', primaryTopic: 'X' });
+  const sameCluster = article({ id: 'art_same', clusterId: 'AI-2', primaryTopic: 'Y', publishedAt: '2026-01-01T00:00:00.000Z' });
+  const sameTopic = article({ id: 'art_topic', clusterId: 'AI-3', primaryTopic: 'X', publishedAt: '2026-12-01T00:00:00.000Z' });
+  assert.deepEqual(relatedArticles(base, [base, sameTopic, sameCluster]).map((a) => a.id), ['art_same', 'art_topic']);
+});

@@ -15,7 +15,8 @@ export function liveArticles(store) {
 
 export function relatedArticles(article, all, max = 3) {
   const others = all.filter((a) => a.id !== article.id);
-  const score = (a) => (a.primaryTopic === article.primaryTopic ? 2 : 0) +
+  const score = (a) => (article.clusterId && a.clusterId === article.clusterId ? 3 : 0) +
+    (a.primaryTopic === article.primaryTopic ? 2 : 0) +
     (a.secondaryTopics || []).filter((t) => (article.secondaryTopics || []).includes(t)).length;
   return others.map((a) => ({ a, s: score(a) })).filter((x) => x.s > 0)
     .sort((x, y) => y.s - x.s || y.a.publishedAt.localeCompare(x.a.publishedAt))
@@ -65,7 +66,7 @@ export function buildSite(cfg, store) {
   for (let p = 1; p <= totalPages; p++) {
     const slice = articles.slice((p - 1) * per, p * per);
     const file = p === 1 ? path.join(articlesDir, 'index.html') : path.join(articlesDir, 'page', String(p), 'index.html');
-    write(file, renderIndexPage(slice, { site, page: p, totalPages }));
+    write(file, renderIndexPage(slice, { site, page: p, totalPages, allArticles: articles }));
     written.push(file);
   }
 

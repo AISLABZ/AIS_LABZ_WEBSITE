@@ -1,5 +1,5 @@
 import { SEARCH_INTENTS } from '../store/store.js';
-import { evidenceForPrompt, inventoryForPrompt, verifiedCapabilities } from './evidence.js';
+import { evidenceForPrompt, inventoryForPrompt, verifiedCapabilities, clusterForPrompt } from './evidence.js';
 
 export const STRATEGY_SCHEMA = {
   type: 'object',
@@ -40,6 +40,7 @@ export async function runStrategist({ topic, research, inventory, gscOpportuniti
       'Use only the supplied verified evidence for factual planning. Internal links may only use paths from the supplied site inventory.',
       'Relevant services may only be chosen from the supplied verified services list (it may be empty).',
       'Assess cannibalization honestly: if an existing page already serves substantially the same intent, set risk "serious".',
+      'If a topic cluster is supplied: its service page owns the commercial intent and its existing pages own their own queries, so do not target those queries; plan internal links to the service page and to the existing cluster pages where relevant (only paths that are in the site inventory).',
       'AEO: plan definition-first and question-led sections whose first sentence answers directly. VSO: at most 8 natural spoken-style questions, only where they fit. GEO: clear entities, explicit definitions, consistent terminology, an original framework only if it is genuinely useful.',
       'Never plan invented statistics, case studies, client results or quotes.',
     ].join(' '),
@@ -49,6 +50,7 @@ export async function runStrategist({ topic, research, inventory, gscOpportuniti
       researchQuestions: research.questions,
       researchEntities: research.entities,
       siteInventory: inventoryForPrompt(inventory),
+      topicCluster: clusterForPrompt(site, topic),
       verifiedServices: verifiedCapabilities(site),
       searchConsoleOpportunities: gscOpportunities.slice(0, 30),
     }),

@@ -4,7 +4,7 @@ import { renderBlocks, renderInline, headingIds, safeHref } from './blocks.js';
 import { buildArticleSchema, buildIndexSchema, jsonLd, articleUrl, absoluteUrl } from './schema.js';
 
 export const CSS_PATH = '/assets/articles/articles.css';
-export const CSS_VERSION = '1';
+export const CSS_VERSION = '2';
 
 function navLinks(items, current) {
   return items.map((l) => {
@@ -163,7 +163,43 @@ export function indexPageUrl(siteUrl, page) {
   return page <= 1 ? `${siteUrl}/articles/` : `${siteUrl}/articles/page/${page}/`;
 }
 
-export function renderIndexPage(articles, { site, page, totalPages }) {
+/**
+ * Topic hub: one section per keyword cluster (config/site.json topicClusters)
+ * listing its live articles, the existing pages that own neighbouring queries,
+ * and the service page that owns the commercial intent. Empty clusters are skipped.
+ */
+export function renderClusterHub(site, articles) {
+  const serviceName = (url) => (site.services || []).find((s) => s.url === url)?.name;
+  const sections = (site.topicClusters || []).map((c) => {
+    const own = articles.filter((a) => a.clusterId === c.id);
+    const reading = (c.relatedReading || []).filter((r) => safeHref(r.url));
+    const service = c.serviceUrl && safeHref(c.serviceUrl) && serviceName(c.serviceUrl);
+    if (!own.length && !reading.length) return null;
+    const anchor = `topic-${c.id.toLowerCase()}`;
+    const items = [
+      ...own.map((a) => `<li><a href="/articles/${escapeHtml(a.slug)}/">${escapeHtml(a.title)}</a></li>`),
+      ...reading.map((r) => `<li><a href="${escapeHtml(safeHref(r.url))}">${escapeHtml(r.title)}</a> <span class="ae-cluster__tag">Blog</span></li>`),
+    ].join('');
+    return {
+      anchor,
+      name: c.name,
+      html: `<section class="ae-cluster" id="${anchor}" aria-labelledby="${anchor}-title">
+          <h3 id="${anchor}-title">${escapeHtml(c.name)}</h3>
+          ${c.description ? `<p class="ae-cluster__desc">${escapeHtml(c.description)}</p>` : ''}
+          <ul class="ae-cluster__list">${items}</ul>
+          ${service ? `<p class="ae-cluster__service">Related service: <a href="${escapeHtml(c.serviceUrl)}">${escapeHtml(service)}</a></p>` : ''}
+        </section>`,
+    };
+  }).filter(Boolean);
+  if (!sections.length) return '';
+  return `<section class="ae-clusters" aria-labelledby="ae-clusters-title">
+        <h2 id="ae-clusters-title">Browse by topic</h2>
+        <nav aria-label="Topics"><ul class="ae-cluster-nav">${sections.map((s) => `<li><a href="#${s.anchor}">${escapeHtml(s.name)}</a></li>`).join('')}</ul></nav>
+        <div class="ae-cluster-grid">${sections.map((s) => s.html).join('')}</div>
+      </section>`;
+}
+
+export function renderIndexPage(articles, { site, page, totalPages, allArticles = articles }) {
   const url = indexPageUrl(site.siteUrl, page);
   const pageTitle = page > 1 ? `${site.articlesIndexTitle} — Page ${page} | ${site.brandName}` : `${site.articlesIndexTitle} | ${site.brandName}`;
   const pagePath = (p) => (p <= 1 ? '/articles/' : `/articles/page/${p}/`);
@@ -185,6 +221,7 @@ export function renderIndexPage(articles, { site, page, totalPages }) {
       </header>
       ${list}
       ${pager}
+      ${page <= 1 ? renderClusterHub(site, allArticles) : ''}
     </div>`;
   const headExtra = [
     page > 1 ? `<link rel="prev" href="${indexPageUrl(site.siteUrl, page - 1)}">` : '',

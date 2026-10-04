@@ -21,6 +21,7 @@ const TOPIC_INPUT = {
     searchIntent: { type: 'string', enum: SEARCH_INTENTS },
     priority: { type: 'integer', minimum: 1, maximum: 1000 },
     relatedService: { type: 'string', maxLength: 80 },
+    clusterId: { type: 'string', pattern: '^[A-Z]+-\\d+$' },
     notes: { type: 'string', maxLength: 2000 },
     status: { type: 'string', enum: TOPIC_STATUSES },
   },

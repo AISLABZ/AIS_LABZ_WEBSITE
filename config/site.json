@@ -1,27 +1,175 @@
 {
-  "_comment": "Site-level configuration for the Articles section. Align brand, navigation, footer and services with the live www.aislabz.com site. Only list services that the live site actually offers: the engine will never claim capabilities that are not listed here.",
+  "_comment": "Site-level configuration for the Articles section. Align brand, navigation, footer and services with the live www.aislabz.com site. Only list services that the live site actually offers: the engine will never claim capabilities that are not listed here. Service capabilities below are copied from the live /services/ pages (checked 2026-10-04). topicClusters drive the /articles/ hub and the strategist's cluster context; see docs/keyword-clusters.md.",
   "siteUrl": "https://www.aislabz.com",
-  "brandName": "AISLabz",
-  "organizationName": "AISLabz",
+  "brandName": "AiS LABZ",
+  "organizationName": "AiS LABZ",
   "logoUrl": "",
   "defaultOgImage": "",
   "locale": "en",
-  "contactUrl": "/contact",
-  "contactLabel": "Talk to AISLabz",
+  "contactUrl": "/#contact",
+  "contactLabel": "Book a free diagnostic",
   "navigation": [
-    { "label": "Home", "href": "/" },
+    { "label": "Services", "href": "/services/" },
+    { "label": "Work", "href": "/work/" },
+    { "label": "About", "href": "/about/" },
+    { "label": "Blog", "href": "/blog/" },
     { "label": "Articles", "href": "/articles/" },
-    { "label": "Contact", "href": "/contact" }
+    { "label": "Contact", "href": "/#contact" }
   ],
   "footerLinks": [
     { "label": "Home", "href": "/" },
+    { "label": "Services", "href": "/services/" },
+    { "label": "Blog", "href": "/blog/" },
     { "label": "Articles", "href": "/articles/" },
-    { "label": "Contact", "href": "/contact" }
+    { "label": "Contact", "href": "/#contact" }
   ],
-  "sameAs": [],
-  "services": [],
-  "pillarPages": [],
+  "sameAs": ["https://www.linkedin.com/company/ais-labz/"],
+  "services": [
+    {
+      "name": "AI Consulting",
+      "url": "/services/ai-consulting/",
+      "capabilities": ["AI readiness assessment", "Use-case selection", "Build", "Governance", "Handover"],
+      "topics": ["ai consulting", "ai strategy", "ai readiness"]
+    },
+    {
+      "name": "Applied AI & Automation",
+      "url": "/services/applied-ai-automation/",
+      "capabilities": ["LLM assistants & copilots", "Lead scoring models", "Ops automation", "Workflow automation with governance built in"],
+      "topics": ["ai automation", "ai agents", "generative ai", "lead scoring"]
+    },
+    {
+      "name": "Organic Growth & SEO",
+      "url": "/services/organic-growth-seo/",
+      "capabilities": ["Technical audits", "Content operations", "Digital PR & authority", "SEO and link building for search and answer engines"],
+      "topics": ["seo", "link building", "answer engine optimization", "ai search visibility"]
+    },
+    {
+      "name": "Data & Analytics",
+      "url": "/services/data-analytics/",
+      "capabilities": ["Server-side tracking", "Attribution modelling", "Executive dashboards"],
+      "topics": ["marketing analytics", "attribution", "measurement"]
+    },
+    {
+      "name": "Performance Marketing",
+      "url": "/services/performance-marketing/",
+      "capabilities": ["Full-funnel media planning", "Creative testing systems", "Incrementality measurement"],
+      "topics": ["paid media", "performance marketing"]
+    },
+    {
+      "name": "Digital Product Development",
+      "url": "/services/digital-product-development/",
+      "capabilities": ["Headless web & commerce", "Design systems", "API & platform architecture"],
+      "topics": ["web development", "platform architecture"]
+    },
+    {
+      "name": "Brand & Positioning",
+      "url": "/services/brand-positioning/",
+      "capabilities": ["Positioning workshops", "Identity systems", "Narrative & messaging"],
+      "topics": ["brand positioning", "messaging"]
+    }
+  ],
+  "pillarPages": [
+    { "url": "/services/", "title": "AI services, SEO and website development" },
+    { "url": "/blog/technical-seo-explained/", "title": "Technical SEO Explained: What Every Website Owner Should Know" },
+    { "url": "/blog/quality-link-building-strategies/", "title": "Quality Link Building Strategies for Better Search Rankings" },
+    { "url": "/blog/organic-growth-and-seo/", "title": "Organic Growth and SEO: How to Build Sustainable Online Visibility" },
+    { "url": "/blog/local-seo-strategies-to-reach-more-customers/", "title": "Local SEO Strategies to Help Your Business Reach More Customers" },
+    { "url": "/blog/answer-engine-optimization-guide/", "title": "Answer Engine Optimization: How to Get Your Brand Cited by AI Assistants" }
+  ],
+  "topicClusters": [
+    {
+      "id": "AI-1",
+      "name": "AI consulting & strategy",
+      "description": "How to move from AI experiments to measured results: strategy, readiness and choosing outside help.",
+      "serviceUrl": "/services/ai-consulting/",
+      "relatedReading": []
+    },
+    {
+      "id": "AI-2",
+      "name": "AI automation & agents",
+      "description": "Automating workflows and deploying AI agents without losing human control.",
+      "serviceUrl": "/services/applied-ai-automation/",
+      "relatedReading": [
+        { "url": "/blog/how-ai-helps-small-businesses-save-time/", "title": "How AI Can Help Small Businesses Save Time and Reduce Costs" }
+      ]
+    },
+    {
+      "id": "AI-3",
+      "name": "AI search visibility (AEO & GEO)",
+      "description": "How search is changing with AI assistants and AI Overviews, and how to make a brand and website citable.",
+      "serviceUrl": "/services/organic-growth-seo/",
+      "relatedReading": [
+        { "url": "/blog/answer-engine-optimization-guide/", "title": "Answer Engine Optimization: How to Get Your Brand Cited by AI Assistants" },
+        { "url": "/blog/technical-seo-explained/", "title": "Technical SEO Explained: What Every Website Owner Should Know" }
+      ]
+    },
+    {
+      "id": "AI-4",
+      "name": "Generative AI in business",
+      "description": "Practical generative AI use cases beyond chatbots, and what they mean for marketing and content.",
+      "serviceUrl": "/services/applied-ai-automation/",
+      "relatedReading": []
+    },
+    {
+      "id": "AI-5",
+      "name": "AI, data & measurement",
+      "description": "Using AI on marketing data, and what has to be true about the data first.",
+      "serviceUrl": "/services/data-analytics/",
+      "relatedReading": []
+    },
+    {
+      "id": "S-1",
+      "name": "Technical SEO & audits",
+      "description": "Crawling, indexing, Core Web Vitals and what an SEO audit should find.",
+      "serviceUrl": "/services/organic-growth-seo/",
+      "relatedReading": [
+        { "url": "/blog/technical-seo-explained/", "title": "Technical SEO Explained: What Every Website Owner Should Know" },
+        { "url": "/blog/what-is-an-seo-audit/", "title": "What Is an SEO Audit and Why Does Your Website Need One?" }
+      ]
+    },
+    {
+      "id": "S-2",
+      "name": "Link building & authority",
+      "description": "Earning links that help, spotting the ones that hurt, and working with a link building partner.",
+      "serviceUrl": "/services/organic-growth-seo/",
+      "relatedReading": [
+        { "url": "/blog/quality-link-building-strategies/", "title": "Quality Link Building Strategies for Better Search Rankings" },
+        { "url": "/blog/how-a-link-building-agency-improves-rankings/", "title": "How a Link Building Agency Can Improve Your Google Rankings" },
+        { "url": "/blog/how-to-identify-low-quality-backlinks/", "title": "How to Identify Low-Quality Backlinks Before They Hurt Your SEO" },
+        { "url": "/blog/professional-seo-link-building-consultancy/", "title": "Why Businesses Need Professional SEO & Link Building Consultancy" }
+      ]
+    },
+    {
+      "id": "S-3",
+      "name": "SEO strategy & organic growth",
+      "description": "How organic growth compounds, how long it takes and how to buy SEO.",
+      "serviceUrl": "/services/organic-growth-seo/",
+      "relatedReading": [
+        { "url": "/blog/organic-growth-and-seo/", "title": "Organic Growth and SEO: How to Build Sustainable Online Visibility" },
+        { "url": "/blog/how-long-does-seo-take/", "title": "How Long Does SEO Take to Work?" },
+        { "url": "/blog/seo-consultancy-vs-agency-retainer/", "title": "SEO Consultancy vs Traditional Agency Retainer: Which Model Fits Your Business?" }
+      ]
+    },
+    {
+      "id": "S-4",
+      "name": "Local SEO",
+      "description": "Getting found by nearby customers: Google Business Profile, citations, reviews and local links.",
+      "serviceUrl": "/services/organic-growth-seo/",
+      "relatedReading": [
+        { "url": "/blog/local-seo-strategies-to-reach-more-customers/", "title": "Local SEO Strategies to Help Your Business Reach More Customers" }
+      ]
+    },
+    {
+      "id": "S-5",
+      "name": "International & MENA SEO",
+      "description": "Bilingual search, hreflang and regional authority for Saudi Arabia, the UAE and beyond.",
+      "serviceUrl": "/services/organic-growth-seo/",
+      "relatedReading": [
+        { "url": "/blog/seo-for-startups-saudi-arabia-uae/", "title": "SEO for Startups in Saudi Arabia and the UAE: A Practical Guide" }
+      ]
+    }
+  ],
   "articlesPerPage": 12,
   "articlesIndexTitle": "Articles",
-  "articlesIndexDescription": "Practical, evidence-based articles on applied AI: consulting, automation, AI agents, AI search visibility, generative AI and AI strategy."
+  "articlesIndexDescription": "Practical, evidence-based articles on applied AI and search: AI strategy, automation and agents, AI search visibility, generative AI, and the SEO that supports them."
 }

@@ -21,6 +21,7 @@ Documentation:
 * [Architecture](docs/articles-engine-architecture.md)
 * [Setup](docs/articles-engine-setup.md): APIs, environment variables, Search Console, Hostinger, auto-publishing
 * [Operations](docs/articles-engine-operations.md): weekly workflow, monitoring, QA failures, updates, rollback
+* [Keyword clusters](docs/keyword-clusters.md): cluster map, topic queue rationale, ranking rules and the monthly review
 
 Layout:
 
